@@ -1,7 +1,7 @@
 # ai-requirements-analyst-agent
 An AI-powered multi-agent Requirements Analyst built with LangChain, LangGraph, Ollama (Gemma 4), and Google Drive to automatically convert customer requirements into BRDs, User Stories, Functional Specifications, and Acceptance Criteria.
 
-# 🤖 AI Requirements Analyst Agent
+# AI Requirements Analyst Agent
 
 An enterprise-grade **AI Requirements Analyst** built using **LangChain**, **LangGraph**, **Ollama (Gemma 4)**, and **Google Drive** that automatically transforms unstructured customer requirement documents into professional software requirement artifacts.
 
@@ -9,22 +9,22 @@ Instead of spending hours manually analyzing customer documents, this multi-agen
 
 ---
 
-# 🚀 Features
+# Features
 
-* 📄 Read requirement documents directly from Google Drive
-* 🧠 Summarize business requirements
-* 🏷️ Classify requirements into categories
-* 🔍 Perform requirement gap analysis
-* 📝 Generate Business Requirement Document (BRD)
-* 📚 Generate Functional Specification Document
-* 📖 Generate User Stories
-* ✅ Generate Gherkin Acceptance Criteria
-* 🔎 Validate generated documents
-* 📤 Store generated documents back to Google Drive
+* Read requirement documents directly from Google Drive
+* Summarize business requirements
+* Classify requirements into categories
+* Perform requirement gap analysis
+* Generate Business Requirement Document (BRD)
+* Generate Functional Specification Document
+* Generate User Stories
+* Generate Gherkin Acceptance Criteria
+* Validate generated documents
+* Store generated documents back to Google Drive
 
 ---
 
-# 🏗️ Architecture
+# Architecture
 
 ```
 Customer Requirement
@@ -65,7 +65,7 @@ Google Drive Export
 
 ---
 
-# 🤖 AI Agents
+# AI Agents
 
 | Agent                          | Responsibility                       |
 | ------------------------------ | ------------------------------------ |
@@ -83,7 +83,7 @@ Google Drive Export
 
 ---
 
-# 🛠 Technology Stack
+# Technology Stack
 
 | Component        | Technology                         |
 | ---------------- | ---------------------------------- |
@@ -100,7 +100,7 @@ Google Drive Export
 
 ---
 
-# 📂 Project Structure
+# Project Structure
 
 ```
 ai-requirements-analyst-agent/
@@ -140,7 +140,7 @@ ai-requirements-analyst-agent/
 
 ---
 
-# 📥 Input
+# Input
 
 The system accepts customer requirement documents in formats such as:
 
@@ -157,7 +157,7 @@ Hospital Management System Requirement.pdf
 
 ---
 
-# 📤 Output
+# Output
 
 The AI generates:
 
@@ -179,7 +179,7 @@ ReviewReport.md
 
 ---
 
-# 🔄 Workflow
+# Workflow
 
 ```
 Read Document
@@ -207,7 +207,7 @@ Export to Google Drive
 
 ---
 
-# 📌 Example Use Cases
+# Example Use Cases
 
 * Healthcare Management Systems
 * Banking Applications
@@ -220,7 +220,7 @@ Export to Google Drive
 
 ---
 
-# 🎯 Roadmap
+# Roadmap
 
 ## Phase 1
 
@@ -251,7 +251,7 @@ Export to Google Drive
 
 ---
 
-# 💡 Future Enhancements
+# Future Enhancements
 
 * Retrieval-Augmented Generation (RAG)
 * Multi-Agent Collaboration
@@ -264,7 +264,7 @@ Export to Google Drive
 
 ---
 
-# ⭐ Skills Demonstrated
+# Skills Demonstrated
 
 * Agentic AI
 * Multi-Agent Systems
@@ -281,15 +281,15 @@ Export to Google Drive
 
 ---
 
-# 📜 License
+# License
 
 This project is licensed under the MIT License.
 
 ---
 
-# 👨‍💻 Author
+# Author
 
-Jagadeesh Patta
+Jagadeeswara Rao Patta
 
 Technical Manager | Full Stack Developer | AI Agent Engineer
 
@@ -297,20 +297,21 @@ I'm a software professional with 14+ years of experience in designing and develo
 
 This repository is part of my AI engineering portfolio, where I build practical, production-oriented AI solutions that solve real-world business problems through intelligent automation.
 
-Connect with Me
-💼 LinkedIn: https://www.linkedin.com/in/jagadeeswara-rao-patta-a6526a30/
-🐙 GitHub: [https://github.com/<your-github-username>](https://github.com/GenAiHubPro)
-Areas of Expertise
-🤖 Agentic AI
-🧠 Large Language Models (LLMs)
-🔗 LangChain & LangGraph
-🦙 Ollama & Local AI Models
-🐍 Python & FastAPI
-⚛️ React & Full Stack Development
-☁️ Cloud-Native Application Development
-🏢 Enterprise Software Architecture
-📄 Intelligent Document Processing
-🔄 Workflow Automation
+**Connect with Me**
+- LinkedIn: https://www.linkedin.com/in/jagadeeswara-rao-patta-a6526a30/
+- GitHub: [https://github.com/<your-github-username>](https://github.com/GenAiHubPro)
+  
+**Areas of Expertise**
+- Agentic AI
+- Large Language Models (LLMs)
+- LangChain & LangGraph
+- Ollama & Local AI Models
+- Python & FastAPI
+- React & Full Stack Development
+- Cloud-Native Application Development
+- Enterprise Software Architecture
+- Intelligent Document Processing
+- Workflow Automation
 
-⭐ If you found this project useful, consider giving it a star and connecting with me on LinkedIn. I regularly build and share enterprise AI projects, open-source tools, and learning resources focused on Agentic AI and Generative AI.
+If you found this project useful, consider giving it a star and connecting with me on LinkedIn. I regularly build and share enterprise AI projects, open-source tools, and learning resources focused on Agentic AI and Generative AI.
 

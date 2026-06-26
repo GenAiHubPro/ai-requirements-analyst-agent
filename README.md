@@ -289,5 +289,28 @@ This project is licensed under the MIT License.
 
 # 👨‍💻 Author
 
-Developed as part of an **AI Agent Engineering Portfolio** showcasing practical enterprise automation using LangChain, LangGraph, and local LLMs.
+Jagadeesh Patta
+
+Technical Manager | Full Stack Developer | AI Agent Engineer
+
+I'm a software professional with 14+ years of experience in designing and developing enterprise applications using Python, React, FastAPI, Node.js, PostgreSQL, and MongoDB. My current focus is on Agentic AI, Large Language Models (LLMs), and building enterprise-grade AI agents using LangChain, LangGraph, Ollama, and open-source AI technologies.
+
+This repository is part of my AI engineering portfolio, where I build practical, production-oriented AI solutions that solve real-world business problems through intelligent automation.
+
+Connect with Me
+💼 LinkedIn: https://www.linkedin.com/in/jagadeeswara-rao-patta-a6526a30/
+🐙 GitHub: [https://github.com/<your-github-username>](https://github.com/GenAiHubPro)
+Areas of Expertise
+🤖 Agentic AI
+🧠 Large Language Models (LLMs)
+🔗 LangChain & LangGraph
+🦙 Ollama & Local AI Models
+🐍 Python & FastAPI
+⚛️ React & Full Stack Development
+☁️ Cloud-Native Application Development
+🏢 Enterprise Software Architecture
+📄 Intelligent Document Processing
+🔄 Workflow Automation
+
+⭐ If you found this project useful, consider giving it a star and connecting with me on LinkedIn. I regularly build and share enterprise AI projects, open-source tools, and learning resources focused on Agentic AI and Generative AI.
 

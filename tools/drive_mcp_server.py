@@ -21,13 +21,12 @@ service = build(
 
 @mcp.tool()
 def list_files():
-
+    """ Get list of all available files in my drive  """
+    print("================ list files called =============")
     results = service.files().list(
         pageSize=20,
         fields="files(id,name,mimeType)"
     ).execute()
-    
-    print(f"========== {results}")
 
     return results["files"]
 
@@ -41,6 +40,8 @@ def get_file_content(file_name: str) -> str:
         - DOCX
         - TXT
     """
+
+    print("============= get file content called ===============")
 
     results = service.files().list(
         q=f"name='{file_name}' and trashed=false",
@@ -111,22 +112,6 @@ def get_file_content(file_name: str) -> str:
             p.text
             for p in doc.paragraphs
         )
-
-    # -----------------------------
-    # PDF
-    # -----------------------------
-    elif mime_type == "application/pdf":
-
-        reader = PdfReader(fh)
-
-        text = ""
-
-        for page in reader.pages:
-            extracted = page.extract_text()
-            if extracted:
-                text += extracted + "\n"
-
-        return text
 
     return f"Unsupported file type: {mime_type}"
 

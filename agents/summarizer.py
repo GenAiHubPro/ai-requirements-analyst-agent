@@ -1,18 +1,12 @@
 from langchain.agents import create_agent
-from langchain.tools import tool
-from langchain_ollama import ChatOllama
 from schemas.state import RequirementState
-
-
-llm = ChatOllama(
-    model="gemma4:e2b",
-    temperature=0
-)
+from config.llm_config import llm
 
 
 system_prompt = """
     You are a senior business analyst.
-    Read the content of the requriement document provided by the DocumentLoaderAgent
+    
+    Read the content of the requirement document provided by the DocumentLoaderAgent
 
     Generate:
         - Business Summary
@@ -25,7 +19,7 @@ system_prompt = """
         - dependencies
         - risks
 
-    Returns the abvove details as JSON format 
+    Returns the response as JSON format 
 """
 
 agent = create_agent(
@@ -56,11 +50,9 @@ class SummarizerAgent:
                 }
             ]
         })
-        
 
         state["summary"] = result["messages"][-1].content
 
         print("============ summary ready and updated in the state ==============")
-
 
         return state

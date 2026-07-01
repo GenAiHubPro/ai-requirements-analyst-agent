@@ -8,7 +8,7 @@ system_prompt = """
     
     Your responsibility is to prepare a professional Business Requirements Document (BRD).
     
-    The requirements are available at state as raw_text and the final classified information is available in state as classified_requirements.
+    The requirements and the final classified information is provided by the user.
         
     Use only the validated requirements provided in the workflow state.
     
@@ -57,7 +57,10 @@ class BRDAgent:
             "messages": [
                 {
                     "role": "user",
-                    "content": f"The classified requirements are: {state.get("classified_requirements")}"
+                    "content": f"""
+                        The main requirements are: {state.get("raw_text")}
+                        The classified requirements are: {state.get("classified_requirements")}
+                    """
                 }
             ]
         })

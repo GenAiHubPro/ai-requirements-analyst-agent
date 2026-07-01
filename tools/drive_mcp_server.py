@@ -82,6 +82,7 @@ def get_file_content(file_name: str) -> str:
     # -----------------------------
     # Download file
     # -----------------------------
+
     request = service.files().get_media(fileId=file_id)
 
     fh = io.BytesIO()
@@ -98,20 +99,26 @@ def get_file_content(file_name: str) -> str:
     # -----------------------------
     # TXT
     # -----------------------------
+
     if mime_type == "text/plain":
         return fh.read().decode("utf-8")
 
     # -----------------------------
     # DOCX
     # -----------------------------
+
     elif mime_type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
 
         doc = Document(fh)
 
-        return "\n".join(
+        content = "\n".join(
             p.text
             for p in doc.paragraphs
         )
+
+        print(f"The file content: {content}")
+
+        return content
 
     return f"Unsupported file type: {mime_type}"
 

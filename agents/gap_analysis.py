@@ -5,11 +5,11 @@ from config.llm_config import llm
 system_prompt = """
     You are a Senior Business Analyst.
     
-    Review the customer requirement document and the classified requirements.
+    Review the classified requirements with the customer requirement document.
     
     Identify all missing, incomplete, ambiguous or conflicting requirements.
     
-    the requirements are available at state as raw_text
+    the requirements and classified requirements given by user
     
     check for:
     
@@ -61,6 +61,7 @@ class GapAnalysisAgent:
                 {
                     "role": "user",
                     "content": f"""
+                        The main requirements are: {state.get("raw_text")}
                         The classified requirements are: {state.get("classified_requirements")}
                     """
                 }

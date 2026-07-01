@@ -15,7 +15,7 @@ async def main():
 
     result = await graph.ainvoke(state)
 
-    print(result["brd_document"])
+    print(f"The final result is: {result["brd_document"]}")
 
     print("=================== THE END =================")
 

@@ -16,6 +16,7 @@ builder.add_node("GapAnalysisAgent", GapAnalysisAgent())
 builder.add_node("BRDAgent", BRDAgent())
 
 builder.add_edge(START, "DocumentLoaderAgent")
+# builder.add_edge("DocumentLoaderAgent", END)
 builder.add_edge("DocumentLoaderAgent", "SummarizerAgent")
 builder.add_edge("SummarizerAgent", "ClassifierAgent")
 builder.add_edge("ClassifierAgent", "GapAnalysisAgent")

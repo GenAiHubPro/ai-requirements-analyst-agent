@@ -6,7 +6,7 @@ from config.llm_config import llm
 system_prompt = """
     You are a senior business analyst.
     
-    Read the content of the requirement document provided by the DocumentLoaderAgent
+    Read the content of the requirement document provided by the user
 
     Generate:
         - Business Summary

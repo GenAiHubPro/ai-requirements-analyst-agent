@@ -27,7 +27,11 @@ class LoaderAgent:
             name="DocumentLoaderAgent",
             tools=tools,
             system_prompt="""
-            Perform the operations based on the google drive based on user query. if required use available tools to achieve the task
+                As a Document Loader.
+                
+                Get the document of given filename from the google drive.
+                
+                Return the content of the file as it is. without doing any changes in the file content
             """
         )
 
@@ -44,8 +48,8 @@ class LoaderAgent:
             ]
         })
 
-        print("================== content downloaded ==============")
-
         state["raw_text"] = result["messages"][-1].content
+
+        print("================== content downloaded ==============")
 
         return state

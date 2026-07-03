@@ -1,7 +1,9 @@
 from langchain.agents import create_agent
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from schemas.state import RequirementState
-from config.llm_config import llm
+from config.llm_config import get_llm_config
+
+llm = get_llm_config("ollama", "gemma4:e2b")
 
 client = MultiServerMCPClient(
     {
@@ -16,6 +18,8 @@ client = MultiServerMCPClient(
 class LoaderAgent:
 
     async def __call__(self, state: RequirementState):
+        if llm is None:
+            raise Exception("AgenticException: LLM not available")
         return await self.invoke(state)
 
     async def invoke(self, state: RequirementState) -> RequirementState:
@@ -29,9 +33,9 @@ class LoaderAgent:
             system_prompt="""
                 As a Document Loader.
                 
-                Get the document of given filename from the google drive.
+                Get the content of the document from the google drive. The document name Given by the user.
                 
-                Return the content of the file as it is. without doing any changes in the file content
+                Return use available tools if required to load the content and return the content to user without doing any changes
             """
         )
 
@@ -42,7 +46,7 @@ class LoaderAgent:
                 {
                     "role": "user",
                     "content": f"""
-                        Get all available files with file name contains {state["file_name"]}.
+                        Get the content of the file with file name contains {state["file_name"]}.
                     """
                 }
             ]

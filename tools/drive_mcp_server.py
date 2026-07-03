@@ -97,17 +97,10 @@ def get_file_content(file_name: str) -> str:
     fh.seek(0)
 
     # -----------------------------
-    # TXT
-    # -----------------------------
-
-    if mime_type == "text/plain":
-        return fh.read().decode("utf-8")
-
-    # -----------------------------
     # DOCX
     # -----------------------------
 
-    elif mime_type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+    if mime_type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
 
         doc = Document(fh)
 
@@ -115,8 +108,6 @@ def get_file_content(file_name: str) -> str:
             p.text
             for p in doc.paragraphs
         )
-
-        print(f"The file content: {content}")
 
         return content
 

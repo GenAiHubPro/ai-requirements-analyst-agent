@@ -1,23 +1,35 @@
 from langchain_ollama import ChatOllama
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
-from dotenv import load_dotenv
-import os
+from langchain_anthropic import ChatAnthropic
+from dotenv import load_dotenv, find_dotenv
 
-load_dotenv()
+load_dotenv(find_dotenv(".venv"))
 
-llm = ChatOllama(
-    model="gemma4:e4b",
-    temperature=0
-)
+def get_llm_config(provider: str, model: str):
+    match provider:
+        case "ollama":
+            return ChatOllama(
+                model=model,
+                temperature=0
+            )
+        case "google":
+            return ChatGoogleGenerativeAI(
+                model=model,
+                temperature=0
+            )
+        case "groq":
+            return ChatGroq(
+                model=model,
+                temperature=0,
+            )
+        case "anthropic":
+            return ChatAnthropic(
+                model_name=model,
+                temperature=0,
+            )
+        case _:
+            return None
 
-# llm = ChatGoogleGenerativeAI(
-#     model="gemini-2.5-flash",
-#     temperature=0
-# )
 
-# llm = ChatGroq(
-#     model="qwen/qwen3-32b",
-#     temperature=0,
-#     api_key=os.getenv("GROQ_API_KEY")
-# )
+

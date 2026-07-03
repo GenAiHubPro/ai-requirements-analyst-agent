@@ -1,6 +1,8 @@
 from langchain.agents import create_agent
 from schemas.state import RequirementState
-from config.llm_config import llm
+from config.llm_config import get_llm_config
+
+llm = get_llm_config("ollama", "gemma4:e2b")
 
 system_prompt = """
     You are a Senior Business Analyst.

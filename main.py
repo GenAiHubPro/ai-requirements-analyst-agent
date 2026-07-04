@@ -13,12 +13,13 @@ async def main():
         "classified_requirements": [],
         "gap_analysis": [],
         "brd_document": "",
-        "functional_specifications": ""
+        "functional_specifications": "",
+        "user_stories": [],
     }
 
     result = await graph.ainvoke(state)
 
-    print(f"The final result is: {result['functional_specifications']}")
+    print(f"The final result is: {result['user_stories']}")
 
     print("=================== THE END =================")
 

@@ -8,3 +8,4 @@ class RequirementState(TypedDict):
     gap_analysis: list
     brd_document: str
     functional_specifications: str
+    user_stories: list

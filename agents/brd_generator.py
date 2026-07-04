@@ -74,8 +74,6 @@ class BRDAgent:
             tools=tools
         )
 
-        print(f" Tools: {tools}")
-
         result = await agent.ainvoke({
             "messages": [
                 {

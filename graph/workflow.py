@@ -7,6 +7,7 @@ from agents.classifier import ClassifierAgent
 from agents.gap_analysis import GapAnalysisAgent
 from agents.brd_generator import BRDAgent
 from agents.functional_spec import FunctionalSpecificationAgent
+from agents.user_story import UserStoryAgent
 
 builder = StateGraph(RequirementState)
 
@@ -16,6 +17,7 @@ builder.add_node("ClassifierAgent", ClassifierAgent())
 builder.add_node("GapAnalysisAgent", GapAnalysisAgent())
 builder.add_node("BRDAgent", BRDAgent())
 builder.add_node("FunctionalSpecificationAgent", FunctionalSpecificationAgent())
+builder.add_node("UserStoryAgent", UserStoryAgent())
 
 builder.add_edge(START, "DocumentLoaderAgent")
 # builder.add_edge("DocumentLoaderAgent", END)
@@ -24,7 +26,8 @@ builder.add_edge("SummarizerAgent", "ClassifierAgent")
 builder.add_edge("ClassifierAgent", "GapAnalysisAgent")
 builder.add_edge("GapAnalysisAgent", "BRDAgent")
 builder.add_edge("BRDAgent", "FunctionalSpecificationAgent")
-builder.add_edge("FunctionalSpecificationAgent", END)
+builder.add_edge("FunctionalSpecificationAgent", "UserStoryAgent")
+builder.add_edge("UserStoryAgent", END)
 
 
 graph = builder.compile()

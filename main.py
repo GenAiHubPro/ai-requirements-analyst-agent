@@ -1,6 +1,8 @@
 import asyncio
-
 from graph.workflow import graph
+from dotenv import load_dotenv
+
+load_dotenv()
 
 async def main():
 
@@ -10,12 +12,13 @@ async def main():
         "summary": {},
         "classified_requirements": [],
         "gap_analysis": [],
-        "brd_document": ""
+        "brd_document": "",
+        "functional_specifications": ""
     }
 
     result = await graph.ainvoke(state)
 
-    print(f"The final result is: {result['brd_document']}")
+    print(f"The final result is: {result['functional_specifications']}")
 
     print("=================== THE END =================")
 

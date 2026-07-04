@@ -7,3 +7,4 @@ class RequirementState(TypedDict):
     classified_requirements: list
     gap_analysis: list
     brd_document: str
+    functional_specifications: str

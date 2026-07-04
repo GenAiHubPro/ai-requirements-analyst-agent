@@ -2,9 +2,10 @@ from langchain_ollama import ChatOllama
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
 from langchain_anthropic import ChatAnthropic
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
+import os
 
-load_dotenv(find_dotenv(".venv"))
+load_dotenv()
 
 def get_llm_config(provider: str, model: str):
     match provider:

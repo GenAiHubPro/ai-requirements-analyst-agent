@@ -2,8 +2,9 @@ from langchain.agents import create_agent
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from schemas.state import RequirementState
 from config.llm_config import get_llm_config
+import os
 
-llm = get_llm_config("ollama", "gemma4:e2b")
+llm = get_llm_config(os.getenv("MODEL_PROVIDER"), os.getenv("MODEL_NAME"))
 
 client = MultiServerMCPClient(
     {
@@ -13,7 +14,6 @@ client = MultiServerMCPClient(
         }
     }
 )
-
 
 class LoaderAgent:
 
@@ -46,7 +46,7 @@ class LoaderAgent:
                 {
                     "role": "user",
                     "content": f"""
-                        Get the content of the file with file name contains {state["file_name"]}.
+                        Get the content of the file, with the file name must contains {state["file_name"]}.
                     """
                 }
             ]

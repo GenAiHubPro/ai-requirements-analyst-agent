@@ -1,8 +1,9 @@
 from langchain.agents import create_agent
 from schemas.state import RequirementState
 from config.llm_config import get_llm_config
+import os
 
-llm = get_llm_config("ollama", "gemma4:e2b")
+llm = get_llm_config(os.getenv("MODEL_PROVIDER"), os.getenv("MODEL_NAME"))
 
 system_prompt = """
     You are a senior business analyst.
@@ -40,9 +41,6 @@ class SummarizerAgent:
         print("======= summarizer initiated =======")
 
         document = state["raw_text"]
-
-        print("=========== content received from loader agent and summarization started =========")
-        print(document)
 
         result = await agent.ainvoke({
             "messages": [

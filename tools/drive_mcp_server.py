@@ -5,6 +5,7 @@ from googleapiclient.http import MediaIoBaseDownload
 from docx import Document
 from pypdf import PdfReader
 import io
+import os
 
 mcp = FastMCP("GoogleDriveMCP")
 
@@ -112,6 +113,42 @@ def get_file_content(file_name: str) -> str:
         return content
 
     return f"Unsupported file type: {mime_type}"
+
+@mcp.tool()
+def create_markdown_file(file_path: str, content: str) -> str:
+    """
+    Creates a standardized Markdown (.md) file at the specified path.
+
+    Args:
+        file_path: The absolute or relative path where the file should be saved (e.g., 'notes.md').
+        content: The body text or main contents of the markdown file.
+    """
+
+    print(f"Filepath is: {file_path}")
+
+    # Force extension to be .md if it isn't provided
+    if not file_path.endswith('.md'):
+        file_path += '.md'
+
+    try:
+
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(script_dir)
+        print(script_dir, project_root)
+        target_absolute_path = os.path.abspath(os.path.join(project_root, file_path))
+
+        # Create directories if they don't exist
+        os.makedirs(os.path.dirname(target_absolute_path), exist_ok=True)
+
+        # Write the content to the file
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.write(content)
+
+        return f"Successfully created markdown file at: {target_absolute_path}"
+
+    except Exception as e:
+        return f"Error creating file: {str(e)}"
+
 
 if __name__ == "__main__":
     mcp.run(

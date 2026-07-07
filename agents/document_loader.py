@@ -1,8 +1,25 @@
+# Copyright (C) 2026 Jagadeeswara Rao Patta
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+
 from langchain.agents import create_agent
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from schemas.state import RequirementState
 from config.llm_config import get_llm_config
 import os
+import logging
 
 llm = get_llm_config(os.getenv("MODEL_PROVIDER"), os.getenv("MODEL_NAME"))
 
@@ -26,6 +43,8 @@ class LoaderAgent:
 
         tools = await client.get_tools()
 
+        logger = logging.getLogger(__name__)
+
         agent = create_agent(
             model=llm,
             name="DocumentLoaderAgent",
@@ -39,7 +58,7 @@ class LoaderAgent:
             """
         )
 
-        print("============== file content loading started ==============")
+        logger.info("File content loading started")
 
         result = await agent.ainvoke({
             "messages": [
@@ -54,6 +73,6 @@ class LoaderAgent:
 
         state["raw_text"] = result["messages"][-1].content
 
-        print("================== content downloaded ==============")
+        logger.info("File content loading completed")
 
         return state

@@ -16,6 +16,13 @@
 import asyncio
 from graph.workflow import graph
 from dotenv import load_dotenv
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+    force=True,  # Python 3.8+
+)
 
 load_dotenv()
 

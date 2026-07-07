@@ -1,7 +1,24 @@
+# Copyright (C) 2026 Jagadeeswara Rao Patta
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+
 from langchain.agents import create_agent
 from schemas.state import RequirementState
 from config.llm_config import get_llm_config
 import os
+import logging
 
 llm = get_llm_config(os.getenv("MODEL_PROVIDER"), os.getenv("MODEL_NAME"))
 
@@ -57,7 +74,9 @@ class GapAnalysisAgent:
 
     async def invoke(self, state: RequirementState) -> RequirementState:
 
-        print("==================== The gap analysis task is started ======================")
+        logger = logging.getLogger(__name__)
+
+        logger.info("The gap analysis task is started")
 
         result = await agent.ainvoke({
             "messages": [
@@ -73,6 +92,6 @@ class GapAnalysisAgent:
 
         state["gap_analysis"] = result["messages"][-1].content
 
-        print("================ The gap analysis task is done =====================")
+        logger.info("The gap analysis task is done")
 
         return state

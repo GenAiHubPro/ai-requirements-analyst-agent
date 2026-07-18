@@ -18,6 +18,7 @@ from langchain.agents import create_agent
 from core.base_agent import BaseAgent
 from prompts.system_prompts import SUMMARIZER_AGENT_SYSTEM_PROMPT
 from schemas.state import RequirementState
+from utils.response_utils import extract_text
 
 
 class SummarizerAgent(BaseAgent):
@@ -36,5 +37,8 @@ class SummarizerAgent(BaseAgent):
         result = await self.agent.ainvoke({
             "messages": [{"role": "user", "content": state["raw_text"]}]
         })
-        state["summary"] = result["messages"][-1].content
+        state["summary"] = extract_text(result["messages"][-1].content)
+        print("================= content =============")
+        print(extract_text(result["messages"][-1].content))
+        print("================= content end =============")
         return state

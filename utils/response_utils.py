@@ -13,18 +13,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-"""Path bootstrap so modules with absolute imports run from any directory.
+from typing import Union, List, Dict, Any
 
-Importing this first inserts the project root (the parent of this file's
-directory) onto ``sys.path``, making the top-level packages (``agents``,
-``config``, ``core``, ``graph``, ``prompts``, ``schemas``, ``tools``,
-``utils``) importable regardless of the current working directory.
-"""
 
-import os
-import sys
-
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-if PROJECT_ROOT not in sys.path:
-    sys.path.insert(0, PROJECT_ROOT)
+def extract_text(content: Union[str, List[Dict[str, Any]]]) -> str:
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts = []
+        for block in content:
+            if isinstance(block, dict) and "text" in block:
+                parts.append(block["text"])
+        return "".join(parts) if parts else str(content)
+    return str(content)

@@ -18,6 +18,7 @@ from langchain.agents import create_agent
 from core.base_agent import BaseAgent
 from prompts.system_prompts import BRD_AGENT_SYSTEM_PROMPT
 from schemas.state import RequirementState
+from utils.response_utils import extract_text
 
 
 class BRDAgent(BaseAgent):
@@ -41,5 +42,5 @@ class BRDAgent(BaseAgent):
                 """,
             }]
         })
-        state["brd_document"] = result["messages"][-1].content
+        state["brd_document"] = extract_text(result["messages"][-1].content)
         return state

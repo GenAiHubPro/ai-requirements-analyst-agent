@@ -18,6 +18,7 @@ from langchain.agents import create_agent
 from core.base_agent import BaseAgent
 from prompts.system_prompts import GAP_ANALYSIS_AGENT_SYSTEM_PROMPT
 from schemas.state import RequirementState
+from utils.response_utils import extract_text
 
 
 class GapAnalysisAgent(BaseAgent):
@@ -41,5 +42,5 @@ class GapAnalysisAgent(BaseAgent):
                 """,
             }]
         })
-        state["gap_analysis"] = result["messages"][-1].content
+        state["gap_analysis"] = extract_text(result["messages"][-1].content)
         return state

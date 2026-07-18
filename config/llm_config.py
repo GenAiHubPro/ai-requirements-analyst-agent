@@ -15,11 +15,20 @@
 
 from langchain_core.language_models import BaseChatModel
 from langchain_ollama import ChatOllama
+from langchain_google_genai import ChatGoogleGenerativeAI
+from google.genai.types import AutomaticFunctionCallingConfig
 
 
 def get_llm_config(provider: str, model: str) -> BaseChatModel:
-    if provider != "ollama":
-        raise ValueError(
-            f"Unsupported MODEL_PROVIDER '{provider}'. Only 'ollama' is configured."
+    if (provider == "ollama"):
+        return ChatOllama(model=model, temperature=0)
+    elif (provider == "google_genai"):
+        llm = ChatGoogleGenerativeAI(model=model, temperature=0)
+        llm = llm.bind(
+            automatic_function_calling=AutomaticFunctionCallingConfig(
+                disable=True
+            )
         )
-    return ChatOllama(model=model, temperature=0)
+        return llm
+    else:
+        raise ValueError(f"Unsupported provider: {provider}")

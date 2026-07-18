@@ -18,6 +18,7 @@ from langchain.agents import create_agent
 from core.base_agent import BaseAgent
 from prompts.system_prompts import CLASSIFIER_AGENT_SYSTEM_PROMPT
 from schemas.state import RequirementState
+from utils.response_utils import extract_text
 
 
 class ClassifierAgent(BaseAgent):
@@ -36,5 +37,5 @@ class ClassifierAgent(BaseAgent):
         result = await self.agent.ainvoke({
             "messages": [{"role": "user", "content": state.get("summary")}]
         })
-        state["classified_requirements"] = result["messages"][-1].content
+        state["classified_requirements"] = extract_text(result["messages"][-1].content)
         return state

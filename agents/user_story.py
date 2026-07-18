@@ -18,6 +18,7 @@ from langchain.agents import create_agent
 from core.base_agent import BaseAgent
 from prompts.system_prompts import USER_STORY_AGENT_SYSTEM_PROMPT
 from schemas.state import RequirementState
+from utils.response_utils import extract_text
 
 
 class UserStoryAgent(BaseAgent):
@@ -42,5 +43,5 @@ class UserStoryAgent(BaseAgent):
                 """,
             }]
         })
-        state["user_stories"] = result["messages"][-1].content
+        state["user_stories"] = extract_text(result["messages"][-1].content)
         return state

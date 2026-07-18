@@ -37,8 +37,7 @@ from agents.user_story import UserStoryAgent
 from config.llm_config import get_llm_config
 from graph.workflow import build_graph
 from schemas.state import RequirementState
-from tools.drive_auth import load_credentials
-from tools.drive_source import DriveDocumentSource
+from tools.local_document_source import LocalDocumentSource
 from tools.local_writer import LocalArtifactWriter
 
 logging.basicConfig(
@@ -69,8 +68,7 @@ async def main(file_name: str):
     llm = get_llm_config(provider, model)  # raises clearly on bad provider
 
     # Composition root: concrete dependencies are assembled here and injected.
-    creds = load_credentials("token.json")
-    document_source = DriveDocumentSource(creds)
+    document_source = LocalDocumentSource(input_dir="input")
 
     # One UUIDv4 per execution; all artifacts go under output/<execution_id>/.
     execution_id = str(uuid.uuid4())
@@ -117,7 +115,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--file",
         default=os.getenv("REQUIREMENTS_FILE", "Requirements.docx"),
-        help="Name of the requirement document in Google Drive",
+        help="Name of the requirement document in the input/ directory",
     )
     args = parser.parse_args()
     asyncio.run(main(args.file))

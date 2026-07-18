@@ -13,28 +13,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from typing import Callable
-
-from langchain_anthropic import ChatAnthropic
 from langchain_core.language_models import BaseChatModel
-from langchain_groq import ChatGroq
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_ollama import ChatOllama
-
-# Provider registry: adding a new provider = one entry, no edits elsewhere (OCP).
-PROVIDER_REGISTRY: dict[str, Callable[..., BaseChatModel]] = {
-    "ollama": lambda model: ChatOllama(model=model, temperature=0),
-    "google": lambda model: ChatGoogleGenerativeAI(model=model, temperature=0),
-    "groq": lambda model: ChatGroq(model=model, temperature=0),
-    "anthropic": lambda model: ChatAnthropic(model_name=model, temperature=0),
-}
 
 
 def get_llm_config(provider: str, model: str) -> BaseChatModel:
-    factory = PROVIDER_REGISTRY.get(provider)
-    if factory is None:
+    if provider != "ollama":
         raise ValueError(
-            f"Unknown MODEL_PROVIDER '{provider}'. "
-            f"Available: {', '.join(PROVIDER_REGISTRY)}"
+            f"Unsupported MODEL_PROVIDER '{provider}'. Only 'ollama' is configured."
         )
-    return factory(model)
+    return ChatOllama(model=model, temperature=0)

@@ -10,5 +10,8 @@ venv/
 token.json
 client_secret.json
 
+# Input documents (user-provided requirement files)
+input/
+
 # Generated artifacts
 output/

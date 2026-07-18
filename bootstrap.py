@@ -6,24 +6,25 @@
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# WITHOUT ANY WARRANTY; without even the implied warranty of
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from typing import TypedDict
+"""Path bootstrap so modules with absolute imports run from any directory.
 
-# NOTE: agents currently store the raw LLM text output (markdown/JSON strings)
-# into these fields, so they are typed as `str` to match actual usage.
-class RequirementState(TypedDict):
-    execution_id: str
-    file_name: str
-    raw_text: str
-    summary: str
-    classified_requirements: str
-    gap_analysis: str
-    brd_document: str
-    functional_specifications: str
-    user_stories: str
+Importing this first inserts the project root (the parent of this file's
+directory) onto ``sys.path``, making the top-level packages (``core``,
+``tools``, ``agents``, ``config``, ``graph``, ``prompts``, ``schemas``)
+importable regardless of the current working directory.
+"""
+
+import os
+import sys
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)

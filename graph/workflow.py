@@ -6,44 +6,38 @@
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-
 from langgraph.graph import StateGraph, START, END
+
+from core.base_agent import BaseAgent
 from schemas.state import RequirementState
 
-from agents.document_loader import LoaderAgent
-from agents.summarizer import SummarizerAgent
-from agents.classifier import ClassifierAgent
-from agents.gap_analysis import GapAnalysisAgent
-from agents.brd_generator import BRDAgent
-from agents.functional_spec import FunctionalSpecificationAgent
-from agents.user_story import UserStoryAgent
 
-builder = StateGraph(RequirementState)
+def build_graph(agents: dict[str, BaseAgent]):
+    """Build the workflow from an injected, ordered agent registry (OCP).
 
-builder.add_node("DocumentLoaderAgent", LoaderAgent())
-builder.add_node("SummarizerAgent", SummarizerAgent())
-builder.add_node("ClassifierAgent", ClassifierAgent())
-builder.add_node("GapAnalysisAgent", GapAnalysisAgent())
-builder.add_node("BRDAgent", BRDAgent())
-builder.add_node("FunctionalSpecificationAgent", FunctionalSpecificationAgent())
-builder.add_node("UserStoryAgent", UserStoryAgent())
+    The execution order is the dict insertion order, so adding/reordering
+    a step is done purely by changing the passed dict in the composition
+    root (``main.py``) — this module is never edited to extend the pipeline.
+    """
+    builder = StateGraph(RequirementState)
 
-builder.add_edge(START, "DocumentLoaderAgent")
-# builder.add_edge("DocumentLoaderAgent", END)
-builder.add_edge("DocumentLoaderAgent", "SummarizerAgent")
-builder.add_edge("SummarizerAgent", "ClassifierAgent")
-builder.add_edge("ClassifierAgent", "GapAnalysisAgent")
-builder.add_edge("GapAnalysisAgent", "BRDAgent")
-builder.add_edge("BRDAgent", "FunctionalSpecificationAgent")
-builder.add_edge("FunctionalSpecificationAgent", "UserStoryAgent")
-builder.add_edge("UserStoryAgent", END)
+    for node_name, agent in agents.items():
+        builder.add_node(node_name, agent)
 
+    node_names = list(agents.keys())
+    if not node_names:
+        raise ValueError("Cannot build graph: no agents provided")
 
-graph = builder.compile()
+    builder.add_edge(START, node_names[0])
+    for current, nxt in zip(node_names, node_names[1:]):
+        builder.add_edge(current, nxt)
+    builder.add_edge(node_names[-1], END)
+
+    return builder.compile()

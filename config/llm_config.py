@@ -13,39 +13,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from langchain_ollama import ChatOllama
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_groq import ChatGroq
+from typing import Callable
+
 from langchain_anthropic import ChatAnthropic
-from dotenv import load_dotenv
-import os
+from langchain_core.language_models import BaseChatModel
+from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_ollama import ChatOllama
 
-load_dotenv()
-
-def get_llm_config(provider: str, model: str):
-    match provider:
-        case "ollama":
-            return ChatOllama(
-                model=model,
-                temperature=0
-            )
-        case "google":
-            return ChatGoogleGenerativeAI(
-                model=model,
-                temperature=0
-            )
-        case "groq":
-            return ChatGroq(
-                model=model,
-                temperature=0,
-            )
-        case "anthropic":
-            return ChatAnthropic(
-                model_name=model,
-                temperature=0,
-            )
-        case _:
-            return None
+# Provider registry: adding a new provider = one entry, no edits elsewhere (OCP).
+PROVIDER_REGISTRY: dict[str, Callable[..., BaseChatModel]] = {
+    "ollama": lambda model: ChatOllama(model=model, temperature=0),
+    "google": lambda model: ChatGoogleGenerativeAI(model=model, temperature=0),
+    "groq": lambda model: ChatGroq(model=model, temperature=0),
+    "anthropic": lambda model: ChatAnthropic(model_name=model, temperature=0),
+}
 
 
-
+def get_llm_config(provider: str, model: str) -> BaseChatModel:
+    factory = PROVIDER_REGISTRY.get(provider)
+    if factory is None:
+        raise ValueError(
+            f"Unknown MODEL_PROVIDER '{provider}'. "
+            f"Available: {', '.join(PROVIDER_REGISTRY)}"
+        )
+    return factory(model)

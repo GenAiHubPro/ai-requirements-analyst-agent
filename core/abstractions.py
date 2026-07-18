@@ -6,24 +6,29 @@
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# WITHOUT ANY WARRANTY; without even the implied warranty of
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from typing import TypedDict
+from abc import ABC, abstractmethod
 
-# NOTE: agents currently store the raw LLM text output (markdown/JSON strings)
-# into these fields, so they are typed as `str` to match actual usage.
-class RequirementState(TypedDict):
-    execution_id: str
-    file_name: str
-    raw_text: str
-    summary: str
-    classified_requirements: str
-    gap_analysis: str
-    brd_document: str
-    functional_specifications: str
-    user_stories: str
+from langchain_core.language_models import BaseChatModel
+
+
+class DocumentSource(ABC):
+    """Abstraction over where requirement documents are read from (ISP/DIP)."""
+
+    @abstractmethod
+    async def get_content(self, file_name: str) -> str:
+        ...
+
+
+class ArtifactWriter(ABC):
+    """Abstraction over where generated artifacts are persisted (ISP/DIP)."""
+
+    @abstractmethod
+    async def write(self, file_path: str, content: str) -> str:
+        ...

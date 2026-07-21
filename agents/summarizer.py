@@ -38,7 +38,4 @@ class SummarizerAgent(BaseAgent):
             "messages": [{"role": "user", "content": state["raw_text"]}]
         })
         state["summary"] = extract_text(result["messages"][-1].content)
-        print("================= content =============")
-        print(extract_text(result["messages"][-1].content))
-        print("================= content end =============")
         return state

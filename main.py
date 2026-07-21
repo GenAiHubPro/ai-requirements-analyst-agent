@@ -85,7 +85,7 @@ async def main(file_name: str):
         "UserStoryAgent": UserStoryAgent(llm),
     }
 
-    graph = build_graph(agents)
+    graph = await build_graph(agents)
 
     state: RequirementState = {
         "execution_id": execution_id,
@@ -99,7 +99,13 @@ async def main(file_name: str):
         "user_stories": "",
     }
 
-    result = await graph.ainvoke(state)
+    config = {
+        "configurable": {
+            "thread_id": str(uuid.uuid4()),
+        }
+    }
+
+    result = await graph.ainvoke(state, config)
 
     for key, filename in ARTIFACT_FILES.items():
         content = result.get(key)

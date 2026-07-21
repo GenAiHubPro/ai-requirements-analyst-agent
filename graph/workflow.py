@@ -12,14 +12,18 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
+import os
 
 from langgraph.graph import StateGraph, START, END
+from psycopg import AsyncConnection
+from psycopg.rows import dict_row
 
 from core.base_agent import BaseAgent
 from schemas.state import RequirementState
+from langgraph.checkpoint.postgres.aio import AsyncPostgresSaver
 
 
-def build_graph(agents: dict[str, BaseAgent]):
+async def build_graph(agents: dict[str, BaseAgent]):
     """Build the workflow from an injected, ordered agent registry (OCP).
 
     The execution order is the dict insertion order, so adding/reordering
@@ -40,4 +44,15 @@ def build_graph(agents: dict[str, BaseAgent]):
         builder.add_edge(current, nxt)
     builder.add_edge(node_names[-1], END)
 
-    return builder.compile()
+    conn = await AsyncConnection.connect(
+        os.getenv("DB_URL"),
+        autocommit=True,
+        prepare_threshold=0,
+        row_factory=dict_row,
+    )
+    checkpointer = AsyncPostgresSaver(conn=conn)
+    await checkpointer.setup()
+    return builder.compile(
+        checkpointer=checkpointer,
+        interrupt_before=["GapAnalysisAgent"]
+    )
